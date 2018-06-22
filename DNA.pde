@@ -1,5 +1,7 @@
-// The Nature of Code
-// Daniel Shiffman
+// Akash Yadav
+// @Hudson Lane, Delhi
+// 22th June 18
+
 // http://natureofcode.com
 
 // Genetic Algorithm, Evolving Shakespeare
