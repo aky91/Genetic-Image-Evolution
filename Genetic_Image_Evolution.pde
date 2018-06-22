@@ -1,6 +1,6 @@
 // Akash Yadav
 // @Hudson Lane, Delhi
-// 17th June 18
+// 22th June 18
 
 // Genetic Algorithm, Evolving Images
 
@@ -30,40 +30,38 @@
 
 PFont f;
 PImage target;
+PImage show;
 int popmax;
 float mutationRate;
 Population population;
 
 void setup() {
 
-	size(640, 360);
+	size(800, 600);
 	f = createFont("Courier", 32, true);
 
-	target = loadImage( "triangle.png");
+	target = loadImage("rez.png");
+  show = createImage(target.width, target.height, RGB);
 
 	rgb2grey(target);
 
-	popmax = 200;
-	mutationRate = 0.01;
+	popmax = 2000;
+	mutationRate = 0.003;
 
 	// Create a populationation with a target phrase, mutation rate, and populationation max
-	//population = new Population(target, mutationRate, popmax);
+	population = new Population(target, mutationRate, popmax);
 }
 
 void draw() {
-  
-  fill(0);
-  ellipse(width, height, 20, 20);
 
-	image(target, 0, 0);
-	
 	// Generate mating pool
 	population.naturalSelection();
 	//Create next generation
 	population.generate();
 	// Calculate fitness
 	population.calcFitness();
-	displayInfo();
+	
+  displayInfo();
 
 	// If we found the target phrase, stop
 	if (population.finished()) {
@@ -72,9 +70,11 @@ void draw() {
 	}
 }
 
+
 void displayInfo() {
 
 	background(255);
+  
 	// Display current status of populationation
 	PImage answer = population.getBest();
 	textFont(f);
@@ -85,13 +85,20 @@ void displayInfo() {
 	textSize(24);
 	text("Best image:  fitness : " + population.getBestFitness(),20,30);
 	textSize(40);
-	image(answer, 20, 100);
+
+  copyImg(target);
+  show.resize(0,100);
+	image(show, 20, 100);
+
+  copyImg(answer);
+  show.resize(0,100);
+  image(show, 20 + 150, 100);
 
 	textSize(18);
-	text("total generations:     " + population.getGenerations(), 20, answer.height + 160);
-	text("average fitness:       " + nf(population.getAverageFitness(), 0, 2), 20, answer.height +180);
-	text("total population: " + popmax, 20, answer.height +200);
-	text("mutation rate:         " + int(mutationRate * 100) + "%", 20, answer.height +220);
+	text("total generations:     " + population.getGenerations(), 20, show.height + 160);
+	text("average fitness:       " + nf(population.getAverageFitness(), 0, 2), 20, show.height +180);
+	text("total population:      " + popmax, 20, show.height +200);
+	text("mutation rate:         " + int(mutationRate * 100) + "%", 20, show.height +220);
 }
 
 void rgb2grey(PImage img){
@@ -112,4 +119,18 @@ void rgb2grey(PImage img){
 	  }
 
   img.loadPixels();
+}
+
+void copyImg(PImage answer){
+  
+  show = createImage(answer.width, answer.height, RGB);
+  
+  answer.loadPixels();
+  show.loadPixels();
+  
+  for(int i = 0; i < answer.pixels.length; i++)
+    show.pixels[i] = answer.pixels[i];
+  
+  show.updatePixels();
+  answer.updatePixels();
 }
