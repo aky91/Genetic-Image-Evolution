@@ -1,6 +1,6 @@
 // Akash Yadav
 // @Hudson Lane, Delhi
-// 22th June 18
+// 26th June 18
 
 // Genetic Algorithm, Evolving Images
 
@@ -16,11 +16,13 @@ class Population {
 	int generations;              // Number of generations
 	boolean finished;             // Are we finished evolving?
 	int perfectScore;
+  float bestScore; 
 
 	Population(PImage p, float m, int num) {
 		target = p;
 		mutationRate = m;
 		population = new DNA[num];
+    bestScore = 0;
 
 		for (int i = 0; i < population.length; i++) 
 			population[i] = new DNA(target);
@@ -132,6 +134,14 @@ class Population {
 				record = population[i].fitness;
 	  
     return record;
+  }
+  
+  float allTimeBest(){
+    float record = getBestFitness();
+    if(record > bestScore)
+      bestScore = record;
+    
+    return bestScore;
   }
 	
 }
