@@ -1,6 +1,6 @@
 // Akash Yadav
 // @Hudson Lane, Delhi
-// 22th June 18
+// 26th June 18
 
 // Genetic Algorithm, Evolving Images
 
@@ -40,13 +40,13 @@ void setup() {
 	size(800, 600);
 	f = createFont("Courier", 32, true);
 
-	target = loadImage("rez.png");
+	target = loadImage("mix.png");
   show = createImage(target.width, target.height, RGB);
 
 	rgb2grey(target);
 
 	popmax = 2000;
-	mutationRate = 0.003;
+	mutationRate = 0.001;
 
 	// Create a populationation with a target phrase, mutation rate, and populationation max
 	population = new Population(target, mutationRate, popmax);
@@ -65,7 +65,8 @@ void draw() {
 
 	// If we found the target phrase, stop
 	if (population.finished()) {
-		println(millis()/1000.0);
+    textSize(30);
+    text("Time taken : " + millis()/1000.0 + " seconds", 20, show.height + 260);
 		noLoop();
 	}
 }
@@ -83,7 +84,7 @@ void displayInfo() {
 	
 	
 	textSize(24);
-	text("Best image:  fitness : " + population.getBestFitness(),20,30);
+	text("Best image:  fitness : " + population.allTimeBest() + " , " + population.getBestFitness(),20,30);
 	textSize(40);
 
   copyImg(target);
@@ -98,7 +99,7 @@ void displayInfo() {
 	text("total generations:     " + population.getGenerations(), 20, show.height + 160);
 	text("average fitness:       " + nf(population.getAverageFitness(), 0, 2), 20, show.height +180);
 	text("total population:      " + popmax, 20, show.height +200);
-	text("mutation rate:         " + int(mutationRate * 100) + "%", 20, show.height +220);
+	text("mutation rate:         " + (mutationRate * 100) + "%", 20, show.height +220);
 }
 
 void rgb2grey(PImage img){
