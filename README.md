@@ -24,6 +24,6 @@ Thus higher the mutation rate, higher no. of pixels are likely to change.
 It is important to choose mutation rate carefully. If it is too low, population can't evolve. If it is too high, the mutation won't let population evolve. 
 
 
-#References
+# References
 https://en.wikipedia.org/wiki/Infinite_monkey_theorem
 https://natureofcode.com/
